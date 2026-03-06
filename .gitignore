@@ -1,0 +1,27 @@
+# Data and output files
+*.png
+*.pkl
+*.tif
+*.dat
+*.csv
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+*.ipynb
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+.env
