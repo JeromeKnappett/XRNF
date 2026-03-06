@@ -65,18 +65,18 @@ def c2image(cin, vmin=0., vmax=None):
 
     return matplotlib.colors.hsv_to_rgb(hsv)
 
-def arr_creat(upperleft, upperright, lowerleft, lowerright):    
-    import matplotlib.pyplot as plt
-    import numpy as np
+# def arr_creat(upperleft, upperright, lowerleft, lowerright):    
+#     import matplotlib.pyplot as plt
+#     import numpy as np
     
-    arr = np.linspace(np.linspace(lowerleft, lowerright, arrwidth), 
-                      np.linspace(upperleft, upperright, arrwidth), arrheight, dtype=int)
-    return arr[:, :, None]
+#     arr = np.linspace(np.linspace(lowerleft, lowerright, arrwidth), 
+#                       np.linspace(upperleft, upperright, arrwidth), arrheight, dtype=int)
+#     return arr[:, :, None]
 
 def complexCbar(c,N, show=False):
     import matplotlib.pyplot as plt
     import numpy as np
-    import plotting
+    # import plotting
     from colormap2d import ColorMap2D
     
     pmin,pmax = np.min(c.imag), np.max(c.imag) #np.min(np.angle(c)), np.max(np.angle(c))
@@ -103,23 +103,23 @@ def complexCbar(c,N, show=False):
     
     cb = c2image(cBar)
     
-    if show:
-        plotting.plotTwoD(cb,
-                          dx=dA,
-                          dy=dP,
-                          xLabel='Amplitude [|A|]',
-                          yLabel='Phase [rad]',
-                          numXticks=3,
-                          numYticks=3,
-                          cbar=False,
-                          aspct=3)
-    else:
-        pass
+    # if show:
+    #     plotting.plotTwoD(cb,
+    #                       dx=dA,
+    #                       dy=dP,
+    #                       xLabel='Amplitude [|A|]',
+    #                       yLabel='Phase [rad]',
+    #                       numXticks=3,
+    #                       numYticks=3,
+    #                       cbar=False,
+    #                       aspct=3)
+    # else:
+    #     pass
     return cb,di,dP,dA
 
 def test():
     import pickle
-    dirPath = '/home/jerome/dev/data/Efields/'
+    dirPath = '/user/home/opt/xl/xl/experiments/correctedWBS_beamCharacterisation/data/aerialImageEfield/'
     
     files = ['aerialImageEfieldEfields.pkl']
     #['atM1EfieldsNEW.pkl']

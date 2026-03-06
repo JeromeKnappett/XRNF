@@ -1,0 +1,202 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jun  8 12:51:17 2022
+
+@author: -
+"""
+
+use_gpu = False
+
+if use_gpu:
+    import afnumpy as np
+    import afnumpy.fft as fft
+    use = 'afnumpy/GPU'
+else:
+    import numpy as np
+    import numpy.fft as fft
+    use = 'numpy/CPU'
+
+#from wpg import srwlpy as srwl
+from wpg.useful_code.wfrutils import get_mesh
+from utils import plotWavefront
+from driftVol import driftVol
+from propPlot import propPlot
+
+def propWavefront():
+        
+    # test for Jeromes project
+    # propagate from input wavefield, which is at the plane of a FZP, 
+    # to some distance given by zrange
+    
+    from wpg.optical_elements import Use_PP
+    from wpg.wavefront import Wavefront
+    from wfrMetrics import printWFDictUgly
+    #from extensions.beamlineExt import bl
+    
+    multi =  True
+    values = [0.005,0.01,0.015,0.02,0.025,0.03,0.035,0.04,0.045,0.05,0.055,0.06,0.065,0.07,0.075,0.08,0.085,0.09,0.095,0.1]
+    
+#    path = '/user/home/opt/xl/xl/experiments/divergence/data/0.05rad'
+    path = ['/user/home/opt/xl/xl/experiments/divergence/data2/' + str(i) + 'rad_exit' for i in values] 
+   # initialWavefront='/opt/wpg/wpg/extensions/in/50Slices63dLTZP_simulationData/wf_noCS.h5'
+    
+    if multi:
+        for i, p in enumerate(path):
+            print(p)
+            initialWavefront= p + '/wf_final.hdf'
+            outPath= p + '/driftVol/'
+            savePath = p + '/propagationPlot.png'
+            
+            zRange = 0.0002
+            zPlanes= 40
+            
+            
+            wf = Wavefront()
+            wf.load_hdf5(initialWavefront)
+            plotWavefront(wf, 'Wavefront input', cuts=True)
+            
+            [nx, ny, xmin, xmax, ymin, ymax] = get_mesh(wf)
+            dx, dy = (xmax-xmin)/nx, (ymax-ymin)/ny
+            print('Mesh grid period: {}x{}'.format(dx,dy))
+            
+            # define driftVol
+            distances=(0.0,zRange,zPlanes)
+            dVol=driftVol(distances,
+                          [0, 0, 1.0, 0, 0, 1.0, 1.0, 1.0, 1.0, 0, 0, 0],#Use_PP(),#(semi_analytical_treatment=1.0,zoom=1, sampling=1),
+                          outputPath = outPath, 
+                          zoomXOutput = 1.0,     # reduce size of output, keep all significant features
+                          zoomYOutput = 1.0,     # reduce size of output, keep all significant features
+                          resampleOutput=1.0,     # reduce size of output, proportional loss of resolution
+                          method=1,
+                          saveIntensity=True,
+                          saveComplex=False,
+                          postProcessFunction=None)
+            
+        #    beamline.append(dVol,Use_PP())
+            
+            # Propagate through driftVol
+            dVol.propagate(wf)
+            
+            plotPropWave(outPath + 'intensity/',
+                         zRange,zPlanes,res=dx,axis='hor',log=True, lMin=1e10, savePath=savePath,plotProfiles=True)
+   
+    else:
+        initialWavefront= path + '/wf_final.hdf'
+        outPath= path + '/driftVol/'
+        savePath = path + '/propagationPlot.png'
+        
+        zRange = 0.0002 #0.0196 #0.0002 # 0.0032664 #400e-6  #0.0196
+        zPlanes= 20
+        
+        
+        wf = Wavefront()
+        wf.load_hdf5(initialWavefront)
+        plotWavefront(wf, 'Wavefront input', cuts=True)
+        
+        [nx, ny, xmin, xmax, ymin, ymax] = get_mesh(wf)
+        dx, dy = (xmax-xmin)/nx, (ymax-ymin)/ny
+        print('Mesh grid period: {}x{}'.format(dx,dy))
+        
+        # define driftVol
+        distances=(0.0,zRange,zPlanes)
+        dVol=driftVol(distances,
+                      [0, 0, 1.0, 0, 0, 1.0, 1.0, 1.0, 1.0, 0, 0, 0],# Use_PP(),#(semi_analytical_treatment=1.0,zoom=1, sampling=1),
+                      outputPath = outPath, 
+                      zoomXOutput = 1.0,     # reduce size of output, keep all significant features
+                      zoomYOutput = 1.0,     # reduce size of output, keep all significant features
+                      resampleOutput=1.0,     # reduce size of output, proportional loss of resolution
+                      method=1,
+                      saveIntensity=True,
+                      saveComplex=False,
+                      postProcessFunction=None)
+        
+    #    beamline.append(dVol,Use_PP())
+        
+        # Propagate through driftVol
+        dVol.propagate(wf)
+        
+        plotPropWave(outPath + 'intensity/',
+                     zRange,zPlanes,res=dx,axis='hor',log=True, lMin=1e8, savePath=savePath,plotProfiles=True)
+        animatePropWave(outPath + 'intensity/')
+#        printWFDictUgly(wf)
+
+def plotPropWave(path,zRange,zPlanes,res,axis,startPlane=0,log=False,lMin=1,savePath=False,plotProfiles=False):
+    import os
+    import tifffile
+#    path= '/user/home/opt/xl/xl/experiments/speckleFocused/data/30mm/driftVol/intensity/'
+    
+    tiffs = []
+    for file in os.listdir(path):
+        if file.endswith(".tif"):
+            tiffs.append(file)
+            
+#    print(tiffs.sort(key='float'))
+    sortedTiffs = sorted(tiffs, key=lambda x: float(x[:-4]))[startPlane::]
+#    print(tiffs)
+    print(sortedTiffs)
+    I = [tifffile.imread(path + t) for t in sortedTiffs]
+    
+#    if startPlane == 0:
+#        zRange = zRange
+#    else:
+    zRange = (zRange/zPlanes)*(zPlanes-startPlane)
+    zPlanes= int(zPlanes - startPlane) 
+    
+    propPlot(I,zRange,zPlanes,
+             res=res,
+             axis=axis,
+             log=log,lMin=lMin,
+             savePath=savePath,
+             plotProfiles=plotProfiles)
+    #1.0993007331597748e-05x1.0908304144859974e-05
+    
+def animatePropWave(path,startPlane=0):
+    import os
+    import tifffile
+    from utils import animateWF
+    
+    tiffs = []
+    for file in os.listdir(path):
+        if file.endswith(".tif"):
+            tiffs.append(file)
+            
+#    print(tiffs.sort(key='float'))
+    sortedTiffs = sorted(tiffs, key=lambda x: float(x[:-4]))[startPlane::]
+#    print(tiffs)
+    print(sortedTiffs)
+    I = [tifffile.imread(path + t) for t in sortedTiffs]
+    
+    animateWF(I,_filename=path+'movie.mp4')
+    
+    
+    
+#def animateWF(wf,_filename=''):
+#    """
+#    wf should be a wf with multiple slices... For now (Testing) it is a list of image arrays
+#    if filename given a movie file will be saved
+#    """
+#
+#    import matplotlib.animation as animation
+#
+#    fig = plt.figure()
+#
+#    ims = []
+#
+#    for i in range(0,len(wf)-1):
+#        print(i)
+#
+#        im = plt.imshow(wf[i], animated=True,aspect='auto') #aspect added by JK
+#        ims.append([im])
+#
+#
+#    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True, repeat_delay=500)
+#    plt.show()
+#
+#    if _filename != '':
+#        ani.save(_filename)
+    
+if __name__=='__main__':
+    propWavefront()
+#    plotPropWave()
+    
