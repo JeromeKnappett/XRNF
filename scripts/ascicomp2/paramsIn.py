@@ -1,0 +1,8 @@
+name,lerStd,lerCor,op_Mask_file_path,op_maskObstacle_file_path,fdir
+rms10,1.0e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_1.00000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms10
+rms15,1.5e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_1.50000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms15
+rms20,2.0e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_2.00000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms20
+rms25,2.5e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_2.50000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms25
+rms30,3.0e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_3.00000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms30
+rms35,3.5e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_3.50000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms35
+rms40,4.0e-09,1e-08,/user/home/opt/xl/xl/experiments/maskLER1/masks/20000020.00000_4.00000_10.00000_mask.tif,/user/home/opt/xl/xl/test/vert_block.tif,/user/home/opt/xl/xl/experiments/EUVmaskLER1/data/rms40
