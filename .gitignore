@@ -16,3 +16,4 @@ scripts/homecomp/local/clean/EUVIL/
 scripts/homecomp/local/clean/tmp*
 scripts/homecomp/plotFromTif
 *.dat
+TEST.FILE
