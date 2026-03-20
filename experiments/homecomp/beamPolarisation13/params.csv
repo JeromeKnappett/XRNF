@@ -1,0 +1,7 @@
+name,fdir,op_Farfield_Propagation_pp,und_bx,und_by
+p0_LH,/data/experiments/beamPolarisation13/data/0LH,"[0, 0, 1.0, 0, 0, 1.6, 0.625, 1.6, 0.625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",0,0.688
+p0_LV,/data/experiments/beamPolarisation13/data/0LV,"[0, 0, 1.0, 0, 0, 1.6, 0.625, 1.6, 0.625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",0.688,0
+p1_LH,/data/experiments/beamPolarisation13/data/1LH,"[0, 0, 1.0, 1, 0, 1.6, 0.625, 1.6, 0.625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",0,0.688
+p1_LV,/data/experiments/beamPolarisation13/data/1LV,"[0, 0, 1.0, 1, 0, 1.6, 0.625, 1.6, 0.625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",0.688,0
+p2_LH,/data/experiments/beamPolarisation13/data/2LH,"[0, 0, 1.0, 2, 0, 1.6, 0.625, 1.6, 0.625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",0,0.688
+p2_LV,/data/experiments/beamPolarisation13/data/2LV,"[0, 0, 1.0, 2, 0, 1.6, 0.625, 1.6, 0.625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]",0.688,0

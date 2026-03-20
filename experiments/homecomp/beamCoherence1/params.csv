@@ -1,0 +1,15 @@
+name,fdir,ebm_emx
+eh100,/data/experiments/beamCoherence1/data/100,1E-07
+eh90,/data/experiments/beamCoherence1/data/90,9E-08
+eh80,/data/experiments/beamCoherence1/data/80,8E-08
+eh70,/data/experiments/beamCoherence1/data/70,7E-08
+eh60,/data/experiments/beamCoherence1/data/60,6E-08
+eh50,/data/experiments/beamCoherence1/data/50,5E-08
+eh40,/data/experiments/beamCoherence1/data/40,4E-08
+eh30,/data/experiments/beamCoherence1/data/30,3E-08
+eh20,/data/experiments/beamCoherence1/data/20,2E-08
+eh10,/data/experiments/beamCoherence1/data/10,1E-08
+eh5,/data/experiments/beamCoherence1/data/5,5E-09
+eh1,/data/experiments/beamCoherence1/data/1,1E-09
+eh05,/data/experiments/beamCoherence1/data/05,5E-10
+eh01,/data/experiments/beamCoherence1/data/01,1E-10

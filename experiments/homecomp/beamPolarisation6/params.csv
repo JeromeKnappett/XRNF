@@ -1,0 +1,13 @@
+name,fdir,op_Mask_file_path,op_Farfield_Propagation_L,und_bx,und_by
+p20_LH,/data/experiments/beamPolarisation6/data/20LH,/opt/xl/xl/experiments/masks/mask_p20.tif,1.45E-05,0,0.688
+p24_LH,/data/experiments/beamPolarisation6/data/24LH,/opt/xl/xl/experiments/masks/mask_p24.tif,1.85E-05,0,0.688
+p28_LH,/data/experiments/beamPolarisation6/data/28LH,/opt/xl/xl/experiments/masks/mask_p28.tif,2.23E-05,0,0.688
+p32_LH,/data/experiments/beamPolarisation6/data/32LH,/opt/xl/xl/experiments/masks/mask_p32.tif,2.6E-05,0,0.688
+p36_LH,/data/experiments/beamPolarisation6/data/36LH,/opt/xl/xl/experiments/masks/mask_p36.tif,2.97E-05,0,0.688
+p40_LH,/data/experiments/beamPolarisation6/data/40LH,/opt/xl/xl/experiments/masks/mask_p40.tif,3.33E-05,0,0.688
+p20_LV,/data/experiments/beamPolarisation6/data/20LV,/opt/xl/xl/experiments/masks/mask_p20.tif,1.45E-05,0.688,0
+p24_LV,/data/experiments/beamPolarisation6/data/24LV,/opt/xl/xl/experiments/masks/mask_p24.tif,1.85E-05,0.688,0
+p28_LV,/data/experiments/beamPolarisation6/data/28LV,/opt/xl/xl/experiments/masks/mask_p28.tif,2.23E-05,0.688,0
+p32_LV,/data/experiments/beamPolarisation6/data/32LV,/opt/xl/xl/experiments/masks/mask_p32.tif,2.6E-05,0.688,0
+p36_LV,/data/experiments/beamPolarisation6/data/36LV,/opt/xl/xl/experiments/masks/mask_p36.tif,2.97E-05,0.688,0
+p40_LV,/data/experiments/beamPolarisation6/data/40LV,/opt/xl/xl/experiments/masks/mask_p40.tif,3.33E-05,0.688,0

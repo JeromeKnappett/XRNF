@@ -1,0 +1,11 @@
+name,fdir,op_Mask_file_path,op_Mask_resolution,op_Mask_areaXEnd,op_Mask_areaYEnd,op_Phase_After_YDS_Far_Field_L
+S25_1,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,1
+S25_2,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,2
+S25_3,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,3
+S25_4,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,4
+S25_5,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,5
+S25_6,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,6
+S25_7,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,7
+S25_8,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,8
+S25_9,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,9
+S25_10,/data/experiments/beamPolarisation11/data/25_prop,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,2.5E-08,10000,10000,10

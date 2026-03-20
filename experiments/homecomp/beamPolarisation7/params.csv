@@ -1,0 +1,17 @@
+name,fdir,op_Mask_file_path,op_Farfield_Propagation_L,und_bx,und_by
+p10_LH,/data/experiments/beamPolarisation7/data/10LH,/opt/xl/xl/experiments/masks/mask_p10.0.tif,1.31E-05,0,0.46111878
+p14_LH,/data/experiments/beamPolarisation7/data/14LH,/opt/xl/xl/experiments/masks/mask_p14.0.tif,2.17E-05,0,0.46111878
+p18_LH,/data/experiments/beamPolarisation7/data/18LH,/opt/xl/xl/experiments/masks/mask_p18.0.tif,2.96E-05,0,0.46111878
+p22_LH,/data/experiments/beamPolarisation7/data/22LH,/opt/xl/xl/experiments/masks/mask_p22.0.tif,3.71E-05,0,0.46111878
+p26_LH,/data/experiments/beamPolarisation7/data/26LH,/opt/xl/xl/experiments/masks/mask_p26.0.tif,4.45E-05,0,0.46111878
+p30_LH,/data/experiments/beamPolarisation7/data/30LH,/opt/xl/xl/experiments/masks/mask_p30.0.tif,5.17E-05,0,0.46111878
+p34_LH,/data/experiments/beamPolarisation7/data/34LH,/opt/xl/xl/experiments/masks/mask_p34.0.tif,5.90E-05,0,0.46111878
+p38_LH,/data/experiments/beamPolarisation7/data/38LH,/opt/xl/xl/experiments/masks/mask_p38.0.tif,6.62E-05,0,0.46111878
+p10_LV,/data/experiments/beamPolarisation7/data/10LV,/opt/xl/xl/experiments/masks/mask_p10.0.tif,1.31E-05,0.46111878,0
+p14_LV,/data/experiments/beamPolarisation7/data/14LV,/opt/xl/xl/experiments/masks/mask_p14.0.tif,2.17E-05,0.46111878,0
+p18_LV,/data/experiments/beamPolarisation7/data/18LV,/opt/xl/xl/experiments/masks/mask_p18.0.tif,2.96E-05,0.46111878,0
+p22_LV,/data/experiments/beamPolarisation7/data/22LV,/opt/xl/xl/experiments/masks/mask_p22.0.tif,3.71E-05,0.46111878,0
+p26_LV,/data/experiments/beamPolarisation7/data/26LV,/opt/xl/xl/experiments/masks/mask_p26.0.tif,4.45E-05,0.46111878,0
+p30_LV,/data/experiments/beamPolarisation7/data/30LV,/opt/xl/xl/experiments/masks/mask_p30.0.tif,5.17E-05,0.46111878,0
+p34_LV,/data/experiments/beamPolarisation7/data/34LV,/opt/xl/xl/experiments/masks/mask_p34.0.tif,5.90E-05,0.46111878,0
+p38_LV,/data/experiments/beamPolarisation7/data/38LV,/opt/xl/xl/experiments/masks/mask_p38.0.tif,6.62E-05,0.46111878,0

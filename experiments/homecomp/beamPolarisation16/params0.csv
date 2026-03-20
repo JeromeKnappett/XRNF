@@ -1,0 +1,9 @@
+name,fdir,und_bx,und_by,op_Mask_file_path
+exit25_LH,/data/experiments/beamPolarisation16/data/25LH,0,0.46111878,/opt/xl/xl/experiments/masks/testYDSs25t0.tif
+exit25_LV,/data/experiments/beamPolarisation16/data/25LV,0.46111878,0,/opt/xl/xl/experiments/masks/testYDSs25t0.tif
+exit50_LH,/data/experiments/beamPolarisation16/data/50LH,0,0.46111878,/opt/xl/xl/experiments/masks/testYDSs50t0.tif
+exit50_LV,/data/experiments/beamPolarisation16/data/50LV,0.46111878,0,/opt/xl/xl/experiments/masks/testYDSs50t0.tif
+exit25_LHR,/data/experiments/beamPolarisation16/data/25LHR,0,0.46111878,/opt/xl/xl/experiments/masks/testYDSs25t90.tif
+exit25_LVR,/data/experiments/beamPolarisation16/data/25LVR,0.46111878,0,/opt/xl/xl/experiments/masks/testYDSs25t90.tif
+exit50_LHR,/data/experiments/beamPolarisation16/data/50LHR,0,0.46111878,/opt/xl/xl/experiments/masks/testYDSs50t90.tif
+exit50_LVR,/data/experiments/beamPolarisation16/data/50LVR,0.46111878,0,/opt/xl/xl/experiments/masks/testYDSs50t90.tif

@@ -1,0 +1,15 @@
+name,fdir,op_Mask_file_path,op_Farfield_Propagation_L,und_bx,und_by
+p20_LH,/data/experiments/maskEfficiency11/data/20LH,/opt/xl/xl/experiments/masks/mask_p20.tif,3.41E-05,0,0.46111878
+p40_LH,/data/experiments/maskEfficiency11/data/40LH,/opt/xl/xl/experiments/masks/mask_p40.tif,7.02E-05,0,0.46111878
+p50_LH,/data/experiments/maskEfficiency11/data/50LH,/opt/xl/xl/experiments/masks/mask_p50.tif,8.80E-05,0,0.46111878
+p60_LH,/data/experiments/maskEfficiency11/data/60LH,/opt/xl/xl/experiments/masks/mask_p60.tif,0.0001058,0,0.46111878
+p80_LH,/data/experiments/maskEfficiency11/data/80LH,/opt/xl/xl/experiments/masks/mask_p80.tif,0.000141,0,0.46111878
+p100_LH,/data/experiments/maskEfficiency11/data/100LH,/opt/xl/xl/experiments/masks/mask_p100.tif,0.0001768,0,0.46111878
+p200_LH,/data/experiments/maskEfficiency11/data/200LH,/opt/xl/xl/experiments/masks/mask_p200.tif,0.000354,0,0.46111878
+p20_LV,/data/experiments/maskEfficiency11/data/20LV,/opt/xl/xl/experiments/masks/mask_p20.tif,3.41E-05,0.46111878,0
+p40_LV,/data/experiments/maskEfficiency11/data/40LV,/opt/xl/xl/experiments/masks/mask_p40.tif,7.02E-05,0.46111878,0
+p50_LV,/data/experiments/maskEfficiency11/data/50LV,/opt/xl/xl/experiments/masks/mask_p50.tif,8.80E-05,0.46111878,0
+p60_LV,/data/experiments/maskEfficiency11/data/60LV,/opt/xl/xl/experiments/masks/mask_p60.tif,0.0001058,0.46111878,0
+p80_LV,/data/experiments/maskEfficiency11/data/80LV,/opt/xl/xl/experiments/masks/mask_p80.tif,0.000141,0.46111878,0
+p100_LV,/data/experiments/maskEfficiency11/data/100LV,/opt/xl/xl/experiments/masks/mask_p100.tif,0.0001768,0.46111878,0
+p200_LV,/data/experiments/maskEfficiency11/data/200LV,/opt/xl/xl/experiments/masks/mask_p200.tif,0.000354,0.46111878,0

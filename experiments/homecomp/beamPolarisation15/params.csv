@@ -1,0 +1,5 @@
+name,fdir,und_bx,und_by,op_Mask_file_path,op_Farfield_Propagation_L
+p24_LH,/data/experiments/beamPolarisation15/data/0LH,0,0.688,/opt/xl/xl/experiments/masks/mask_p24.tif,1.71E-05
+p24_LV,/data/experiments/beamPolarisation15/data/0LV,0.688,0,/opt/xl/xl/experiments/masks/mask_p24.tif,1.71E-05
+p40_LH,/data/experiments/beamPolarisation15/data/1LH,0,0.688,/opt/xl/xl/experiments/masks/mask_p40.tif,3.26E-05
+p40_LV,/data/experiments/beamPolarisation15/data/1LV,0.688,0,/opt/xl/xl/experiments/masks/mask_p40.tif,3.26E-05

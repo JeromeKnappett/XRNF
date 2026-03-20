@@ -1,0 +1,6 @@
+name,fdir,und_bx,und_by,und_phx,und_phy
+pLH,/data/experiments/beamPolarisation2/data/LH,0,0.46111878,0,0
+pLV,/data/experiments/beamPolarisation2/data/LV,0.46111878,0,0,0
+pLD,/data/experiments/beamPolarisation2/data/LD,-0.326060216,0.326060216,0,0
+pCR,/data/experiments/beamPolarisation2/data/CR,0.326060216,0.326060216,1.570796327,0
+pCL,/data/experiments/beamPolarisation2/data/CL,0.326060216,0.326060216,0,1.570796327

@@ -1,0 +1,17 @@
+name,fdir,und_bx,und_by,op_Aperture2_Dy,op_Obstacle_Dy
+s250_LV,/data/experiments/beamPolarisation12/data/250LV,0.46111878,0,0.00026,0.00025
+s250_LH,/data/experiments/beamPolarisation12/data/250LH,0,0.46111878,0.00026,0.00025
+s275_LV,/data/experiments/beamPolarisation12/data/275LV,0.46111878,0,0.000285,0.000275
+s275_LH,/data/experiments/beamPolarisation12/data/275LH,0,0.46111878,0.000285,0.000275
+s300_LV,/data/experiments/beamPolarisation12/data/300LV,0.46111878,0,0.00031,0.0003
+s300_LH,/data/experiments/beamPolarisation12/data/300LH,0,0.46111878,0.00031,0.0003
+s325_LV,/data/experiments/beamPolarisation12/data/325LV,0.46111878,0,0.000335,0.000325
+s325_LH,/data/experiments/beamPolarisation12/data/325LH,0,0.46111878,0.000335,0.000325
+s350_LV,/data/experiments/beamPolarisation12/data/350LV,0.46111878,0,0.00036,0.00035
+s350_LH,/data/experiments/beamPolarisation12/data/350LH,0,0.46111878,0.00036,0.00035
+s375_LV,/data/experiments/beamPolarisation12/data/375LV,0.46111878,0,0.000385,0.000375
+s375_LH,/data/experiments/beamPolarisation12/data/375LH,0,0.46111878,0.000385,0.000375
+s400_LV,/data/experiments/beamPolarisation12/data/400LV,0.46111878,0,0.00041,0.0004
+s400_LH,/data/experiments/beamPolarisation12/data/400LH,0,0.46111878,0.00041,0.0004
+s425_LV,/data/experiments/beamPolarisation12/data/425LV,0.46111878,0,0.000435,0.000425
+s425_LH,/data/experiments/beamPolarisation12/data/425LH,0,0.46111878,0.000435,0.000425

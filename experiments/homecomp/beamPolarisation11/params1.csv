@@ -1,0 +1,10 @@
+name,fdir,op_Mask_file_path,'op_Mask_rotateAngle'
+s25_in0,/data/experiments/beamPolarisation11/data/25_in0,/opt/xl/xl/experiments/masks/testYDSs25t0.tif,0
+s50_in0,/data/experiments/beamPolarisation11/data/50_in0,/opt/xl/xl/experiments/masks/testYDSs50t0.tif,0
+s75_in0,/data/experiments/beamPolarisation11/data/75_in0,/opt/xl/xl/experiments/masks/testYDSs75t0.tif,0
+s100_in0,/data/experiments/beamPolarisation11/data/100_in0,/opt/xl/xl/experiments/masks/testYDSs100t0.tif,0
+s125_in0,/data/experiments/beamPolarisation11/data/125_in0,/opt/xl/xl/experiments/masks/testYDSs125t0.tif,0
+s150_in0,/data/experiments/beamPolarisation11/data/150_in0,/opt/xl/xl/experiments/masks/testYDSs150t0.tif,0
+s175_in0,/data/experiments/beamPolarisation11/data/175_in0,/opt/xl/xl/experiments/masks/testYDSs175t0.tif,0
+s200_in0,/data/experiments/beamPolarisation11/data/200_in0,/opt/xl/xl/experiments/masks/testYDSs200t0.tif,0
+s225_in0,/data/experiments/beamPolarisation11/data/225_in0,/opt/xl/xl/experiments/masks/testYDSs225t0.tif,0

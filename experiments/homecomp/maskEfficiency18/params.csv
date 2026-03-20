@@ -1,0 +1,10 @@
+name,fdir,op_Mask_file_path,op_Mask_areaXEnd,op_Mask_areaYEnd,op_Mask_resolution
+f0.825,/data/experiments/maskEfficiency18/data/0825,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_33-40.tif,2300,2300,4.35E-09
+f0.75,/data/experiments/maskEfficiency18/data/0750,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_3-4.tif,2400,2400,4.17E-09
+f0.625,/data/experiments/maskEfficiency18/data/0625,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_5-8.tif,2300,2300,4.35E-09
+f0.6,/data/experiments/maskEfficiency18/data/0600,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_3-5.tif,2500,2500,4.00E-09
+f0.4,/data/experiments/maskEfficiency18/data/0400,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_2-5.tif,2500,2500,4.00E-09
+f0.5,/data/experiments/maskEfficiency18/data/05,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_1-2.tif,2400,2400,4.17E-09
+f0.375,/data/experiments/maskEfficiency18/data/0375,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_3-8.tif,2400,2400,4.17E-09
+f0.25,/data/experiments/maskEfficiency18/data/025,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_1-4.tif,2400,2400,4.17E-09
+f0.175,/data/experiments/maskEfficiency18/data/0175,/opt/xl/xl/experiments/maskEfficiency18/masks/testGrating_7-40.tif,2400,2400,4.17E-09

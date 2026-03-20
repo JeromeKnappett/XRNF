@@ -1,0 +1,11 @@
+name,fdir,und_bx,und_by,op_Aperture2_Dy,op_Obstacle_Dy
+s125_LV,/data/experiments/beamPolarisation10/data/125LV,0.46111878,0,0.000135,0.000125
+s125_LH,/data/experiments/beamPolarisation10/data/125LH,0,0.46111878,0.000135,0.000125
+s150_LV,/data/experiments/beamPolarisation10/data/150LV,0.46111878,0,0.00016,0.00015
+s150_LH,/data/experiments/beamPolarisation10/data/150LH,0,0.46111878,0.00016,0.00015
+s175_LV,/data/experiments/beamPolarisation10/data/175LV,0.46111878,0,0.000185,0.000175
+s175_LH,/data/experiments/beamPolarisation10/data/175LH,0,0.46111878,0.000185,0.000175
+s200_LV,/data/experiments/beamPolarisation10/data/200LV,0.46111878,0,0.00021,0.0002
+s200_LH,/data/experiments/beamPolarisation10/data/200LH,0,0.46111878,0.00021,0.0002
+s225_LV,/data/experiments/beamPolarisation10/data/225LV,0.46111878,0,0.000235,0.000225
+s225_LH,/data/experiments/beamPolarisation10/data/225LH,0,0.46111878,0.000235,0.000225

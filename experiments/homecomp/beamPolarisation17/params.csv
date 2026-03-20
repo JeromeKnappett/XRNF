@@ -1,0 +1,5 @@
+name,fdir,und_bx,und_by,und_phx,und_phy
+inLinHor,/data/experiments/beamPolarisation17/data/inLinHor,0,0.46111878,0,0
+inLinVer,/data/experiments/beamPolarisation17/data/inLinVer,0.46111878,0,0,0
+inLin45,/data/experiments/beamPolarisation17/data/inLin45,-0.326060216,0.326060216,0,0
+inCirR,/data/experiments/beamPolarisation17/data/inCirR,0.326060216,0.326060216,1.570796327,0
