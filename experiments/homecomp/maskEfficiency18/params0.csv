@@ -1,5 +1,0 @@
-name,fdir,op_Mask_file_path
-exit_f0.5,/data/experiments/maskEfficiency7/data/exit_05,/opt/xl/xl/experiments/maskEfficiency7/masks/testGrating_1-2.tif
-exit_f0.375,/data/experiments/maskEfficiency7/data/exit_0375,/opt/xl/xl/experiments/maskEfficiency7/masks/testGrating_3-8.tif
-exit_f0.25,/data/experiments/maskEfficiency7/data/exit_025,/opt/xl/xl/experiments/maskEfficiency7/masks/testGrating_1-4.tif
-exit_f0.175,/data/experiments/maskEfficiency7/data/exit_0175,/opt/xl/xl/experiments/maskEfficiency7/masks/testGrating_7-40.tif
