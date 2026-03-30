@@ -82,6 +82,9 @@ window_nm     = 5000.0       # [nm]
 # Smaller → finer map but slower.  Typically window_nm / 4 is a good start.
 stride_nm     = 1000.0       # [nm]
 
+# Which metric to use for selecting best region: 'michelson', 'rms_contrast', 'composite_C', 'NILS', or 'all' (average of NILS, composite_C, rms_contrast)
+best_metric   = 'all'
+
 # When True, skip the expensive bootstrap (RMS) and Monte-Carlo (composite-C)
 # uncertainty estimates *inside each window*.  The global computation always
 # runs the full estimators.  Recommended True unless you have few windows.
@@ -437,6 +440,36 @@ for label, entry in arrays.items():
 labels = list(results.keys())
 print(f"\nDone. {len(labels)} array(s) processed.")
 
+# ── Find best 5x5 um regions ────────────────────────────────────────────────
+best_regions = {}
+for label in labels:
+    res = results[label]
+    for mod in mods:
+        maps = res[f'maps_{mod}']
+        if best_metric == 'all':
+            score_map = (maps['map_NILS'] + maps['map_composite_C'] + maps['map_rms_contrast']) / 3
+        else:
+            score_map = maps[f'map_{best_metric}']
+        if np.all(np.isnan(score_map)):
+            continue
+        max_idx = np.unravel_index(np.nanargmax(score_map), score_map.shape)
+        iy, ix = max_idx
+        y_center_nm = maps['y_centres_nm'][iy]
+        x_center_nm = maps['x_centres_nm'][ix]
+        arr = res[f'arr_{mod}']
+        pix = res['pixel_size']
+        win_px = int(round(window_nm / (pix * 1e9)))
+        half = win_px // 2
+        cy_pixel = arr.shape[0] // 2 + int(round(y_center_nm / (pix * 1e9)))
+        cx_pixel = arr.shape[1] // 2 + int(round(x_center_nm / (pix * 1e9)))
+        sub_arr = arr[cy_pixel - half: cy_pixel + half, cx_pixel - half: cx_pixel + half]
+        metrics = compute_metrics(sub_arr, pix, pitch, fast=False)
+        best_regions[f'{label}_{mod}'] = {
+            'metrics': metrics,
+            'center_nm': (x_center_nm, y_center_nm),
+            'center_pixel': (cx_pixel, cy_pixel)
+        }
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PLOTTING HELPERS
@@ -496,29 +529,52 @@ def _plot_map_pair(ax_mean, ax_var, maps, key, label, pix):
     _add_colorbar(ax_var.get_figure(), ax_var, im2, f'({_label_fmt(key)})²')
 
 
+def _plot_map_mean(ax, maps, key, label, pix):
+    """Draw mean-map for one metric."""
+    m = maps[f'map_{key}']
+    xc = maps['x_centres_nm']
+    yc = maps['y_centres_nm']
+    extent = [xc[0], xc[-1], yc[-1], yc[0]]
+
+    mean_m = np.nanmean(m)
+    cmap = _cmap_for(key)
+
+    vmin = np.nanpercentile(m, 2)
+    vmax = np.nanpercentile(m, 98)
+    im = ax.imshow(m, extent=extent, origin='upper',
+                   aspect='equal', cmap=cmap, vmin=vmin, vmax=vmax)
+    ax.set_title(f'{label}  (mean={mean_m:.3g})', fontsize=FS)
+    ax.set_xlabel('x  [nm]', fontsize=FS - 1)
+    ax.set_ylabel('y  [nm]', fontsize=FS - 1)
+    ax.tick_params(labelsize=FS - 2)
+    _add_colorbar(ax.get_figure(), ax, im, _label_fmt(key))
+
+
 # ══════════════════════════════════════════════════════════════════════════════
-# FIGURE 1 – METRIC MAPS  (mean + variance, per array, per modality)
+# FIGURE 1 – METRIC MAPS  (mean only, per array, per modality)
 # ══════════════════════════════════════════════════════════════════════════════
+selected_keys = ['NILS', 'composite_C', 'period_mean']
+
 mods = ['I', 'P'] if analyse == 'both' else [analyse]
 
 for label in labels:
     res = results[label]
     for mod in mods:
         maps = res[f'maps_{mod}']
-        n_metrics = len(METRIC_KEYS)
+        n_metrics = len(selected_keys)
 
-        fig, axes = plt.subplots(n_metrics, 2,
-                                  figsize=(12, 4 * n_metrics))
+        fig, axes = plt.subplots(n_metrics, 1,
+                                  figsize=(6, 4 * n_metrics))
         fig.suptitle(
             f'{label}  –  {"Intensity" if mod=="I" else "Phase"}  '
             f'metric maps\n'
             f'window = {window_nm:.0f} nm,  stride = {stride_nm:.0f} nm',
             fontsize=FS + 1)
 
-        for row, (key, lbl, unit, _) in enumerate(METRIC_DEFS):
-            _plot_map_pair(axes[row, 0], axes[row, 1],
-                           maps, key,
-                           lbl + (f' [{unit}]' if unit else ''),
+        for row, key in enumerate(selected_keys):
+            lbl = _label_fmt(key).split('  [')[0]  # remove unit
+            _plot_map_mean(axes[row] if n_metrics > 1 else axes, maps, key,
+                           lbl + (f' [{_label_fmt(key).split("  [")[1]}' if '  [' in _label_fmt(key) else ''),
                            res['pixel_size'])
 
         plt.tight_layout()
@@ -530,7 +586,58 @@ for label in labels:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# FIGURE 2 – METRIC DISTRIBUTIONS  (histograms from window values)
+# FIGURE 2 – WAVEFIELD PLOTS WITH BEST REGION CENTER
+# ══════════════════════════════════════════════════════════════════════════════
+
+for label in labels:
+    res = results[label]
+    for mod in mods:
+        if f'{label}_{mod}' not in best_regions:
+            continue
+        arr = res[f'arr_{mod}']
+        cx, cy = best_regions[f'{label}_{mod}']['center_pixel']
+        x_nm, y_nm = best_regions[f'{label}_{mod}']['center_nm']
+        fig, ax = plt.subplots(figsize=(8,6))
+        im = ax.imshow(arr, cmap='viridis' if mod=='I' else 'plasma', origin='upper')
+        ax.plot(cx, cy, 'rx', markersize=15, markeredgewidth=3)
+        ax.set_title(f'{label} - {mod} wavefield with best region center\nCenter: x={x_nm:.1f} nm, y={y_nm:.1f} nm')
+        ax.set_xlabel('x [pixels]')
+        ax.set_ylabel('y [pixels]')
+        plt.colorbar(im, ax=ax)
+        fname = f'wavefield_{label}_{mod}.png'
+        if SAVE:
+            plt.savefig(dir_path + fname, bbox_inches='tight')
+            print(f"Saved → {fname}")
+        plt.show()
+        print(f"Best region center for {label} {mod}: x={x_nm:.1f} nm, y={y_nm:.1f} nm")
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# FIGURE 3 – COMPARISON OF METRICS IN BEST REGIONS
+# ══════════════════════════════════════════════════════════════════════════════
+
+labels_mod = [lm for lm in best_regions.keys()]
+n_labels = len(labels_mod)
+for key in selected_keys:
+    values = [best_regions[lm]['metrics'][key] for lm in labels_mod]
+    errors = [best_regions[lm]['metrics'].get(key + '_sem', 0) for lm in labels_mod]
+    fig, ax = plt.subplots(figsize=(10,6))
+    x = np.arange(n_labels)
+    ax.bar(x, values, yerr=errors, capsize=5, color='skyblue', edgecolor='black')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels_mod, rotation=45, ha='right')
+    ax.set_title(f'{_label_fmt(key)} in best 5x5 μm regions')
+    ax.set_ylabel(_label_fmt(key))
+    plt.tight_layout()
+    fname = f'metric_comparison_{key}.png'
+    if SAVE:
+        plt.savefig(dir_path + fname, bbox_inches='tight')
+        print(f"Saved → {fname}")
+    plt.show()
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# FIGURE 4 – METRIC DISTRIBUTIONS  (histograms from window values)
 # ══════════════════════════════════════════════════════════════════════════════
 
 # One figure per modality, one subplot per metric.
