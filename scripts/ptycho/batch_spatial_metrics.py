@@ -440,35 +440,113 @@ for label, entry in arrays.items():
 labels = list(results.keys())
 print(f"\nDone. {len(labels)} array(s) processed.")
 
-# ── Find best 5x5 um regions ────────────────────────────────────────────────
+# ── Utility: group by aX identifier (e.g. a1_hc / a1_lc)
+import re
+
+def _group_key(label: str) -> str:
+    m = re.search(r'\b(a\d+)\b', label)
+    return m.group(1) if m else label
+
+# ── Find best 5x5 um region per group and apply same region to all group members
 best_regions = {}
+
+# group labels by aX
+grouped = {}
 for label in labels:
-    res = results[label]
-    for mod in mods:
-        maps = res[f'maps_{mod}']
-        if best_metric == 'all':
-            score_map = (maps['map_NILS'] + maps['map_composite_C'] + maps['map_rms_contrast']) / 3
-        else:
-            score_map = maps[f'map_{best_metric}']
-        if np.all(np.isnan(score_map)):
-            continue
-        max_idx = np.unravel_index(np.nanargmax(score_map), score_map.shape)
-        iy, ix = max_idx
-        y_center_nm = maps['y_centres_nm'][iy]
-        x_center_nm = maps['x_centres_nm'][ix]
-        arr = res[f'arr_{mod}']
-        pix = res['pixel_size']
-        win_px = int(round(window_nm / (pix * 1e9)))
-        half = win_px // 2
-        cy_pixel = arr.shape[0] // 2 + int(round(y_center_nm / (pix * 1e9)))
-        cx_pixel = arr.shape[1] // 2 + int(round(x_center_nm / (pix * 1e9)))
-        sub_arr = arr[cy_pixel - half: cy_pixel + half, cx_pixel - half: cx_pixel + half]
-        metrics = compute_metrics(sub_arr, pix, pitch, fast=False)
-        best_regions[f'{label}_{mod}'] = {
-            'metrics': metrics,
-            'center_nm': (x_center_nm, y_center_nm),
-            'center_pixel': (cx_pixel, cy_pixel)
-        }
+    key = _group_key(label)
+    grouped.setdefault(key, []).append(label)
+
+win_px = None
+for group_key, group_labels in grouped.items():
+    # compute collective score map over all group members across mods
+    group_score = None
+    group_count = None
+    y_centres_nm = None
+    x_centres_nm = None
+
+    for label in group_labels:
+        res = results[label]
+        for mod in mods:
+            maps = res[f'maps_{mod}']
+            if win_px is None:
+                pix = res['pixel_size']
+                win_px = int(round(window_nm / (pix * 1e9)))
+            if best_metric == 'all':
+                score_map = (maps['map_NILS'] + maps['map_composite_C'] + maps['map_rms_contrast']) / 3
+            else:
+                score_map = maps.get(f'map_{best_metric}')
+            if score_map is None or np.all(np.isnan(score_map)):
+                continue
+
+            if group_score is None:
+                group_score = np.zeros_like(score_map, dtype=float)
+                group_count = np.zeros_like(score_map, dtype=float)
+                y_centres_nm = maps['y_centres_nm']
+                x_centres_nm = maps['x_centres_nm']
+
+            valid_mask = np.isfinite(score_map)
+            group_score[valid_mask] += score_map[valid_mask]
+            group_count[valid_mask] += 1
+
+    if group_score is None or np.all(group_count == 0):
+        continue
+
+    avg_score = np.where(group_count > 0, group_score / group_count, np.nan)
+
+    # Candidate indices sorted by highest group score
+    flat_order = np.argsort(np.nan_to_num(avg_score, nan=-np.inf))[::-1]
+
+    half = win_px // 2
+    selected = None
+    selected_idx = None
+
+    for flat_idx in flat_order:
+        iy, ix = np.unravel_index(flat_idx, avg_score.shape)
+        y_center_nm = y_centres_nm[iy]
+        x_center_nm = x_centres_nm[ix]
+
+        # Enforce is in bounds for all group members
+        ok = True
+        for label in group_labels:
+            for mod in mods:
+                arr = results[label][f'arr_{mod}']
+                pix = results[label]['pixel_size']
+                cy_pixel = arr.shape[0] // 2 + int(round(y_center_nm / (pix * 1e9)))
+                cx_pixel = arr.shape[1] // 2 + int(round(x_center_nm / (pix * 1e9)))
+                if (cy_pixel - half < 0 or cy_pixel + half > arr.shape[0] or
+                        cx_pixel - half < 0 or cx_pixel + half > arr.shape[1]):
+                    ok = False
+                    break
+            if not ok:
+                break
+
+        if ok:
+            selected = (x_center_nm, y_center_nm)
+            selected_idx = (ix, iy)
+            break
+
+    if selected is None:
+        # fallback to center of map
+        iy = len(y_centres_nm) // 2
+        ix = len(x_centres_nm) // 2
+        selected = (x_centres_nm[ix], y_centres_nm[iy])
+        selected_idx = (ix, iy)
+
+    x_center_nm, y_center_nm = selected
+
+    for label in group_labels:
+        for mod in mods:
+            arr = results[label][f'arr_{mod}']
+            pix = results[label]['pixel_size']
+            cy_pixel = arr.shape[0] // 2 + int(round(y_center_nm / (pix * 1e9)))
+            cx_pixel = arr.shape[1] // 2 + int(round(x_center_nm / (pix * 1e9)))
+            sub_arr = arr[cy_pixel - half: cy_pixel + half, cx_pixel - half: cx_pixel + half]
+            metrics = compute_metrics(sub_arr, pix, pitch, fast=False)
+            best_regions[f'{label}_{mod}'] = {
+                'metrics': metrics,
+                'center_nm': (x_center_nm, y_center_nm),
+                'center_pixel': (cx_pixel, cy_pixel)
+            }
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -600,6 +678,15 @@ for label in labels:
         fig, ax = plt.subplots(figsize=(8,6))
         im = ax.imshow(arr, cmap='viridis' if mod=='I' else 'plasma', origin='upper')
         ax.plot(cx, cy, 'rx', markersize=15, markeredgewidth=3)
+
+        # Draw box around selected window (5x5 um) at center
+        pix = res['pixel_size']
+        win_px = int(round(window_nm / (pix * 1e9)))
+        half_px = win_px // 2
+        rect = plt.Rectangle((cx - half_px, cy - half_px), win_px, win_px,
+                             edgecolor='red', facecolor='none', linewidth=2)
+        ax.add_patch(rect)
+
         ax.set_title(f'{label} - {mod} wavefield with best region center\nCenter: x={x_nm:.1f} nm, y={y_nm:.1f} nm')
         ax.set_xlabel('x [pixels]')
         ax.set_ylabel('y [pixels]')
@@ -617,28 +704,36 @@ for label in labels:
 # ══════════════════════════════════════════════════════════════════════════════
 
 labels_mod = [lm for lm in best_regions.keys()]
-n_labels = len(labels_mod)
+# Split into 2 groups of 3 if available (fallbacks allowed)
+group1 = labels_mod[:3]
+group2 = labels_mod[3:6]
+
 for key in selected_keys:
-    values = [best_regions[lm]['metrics'][key] for lm in labels_mod]
-    errors = [best_regions[lm]['metrics'].get(key + '_sem', 0) for lm in labels_mod]
+    values1 = [best_regions[lm]['metrics'][key] for lm in group1]
+    errors1 = [best_regions[lm]['metrics'].get(key + '_sem', 0) for lm in group1]
+    values2 = [best_regions[lm]['metrics'][key] for lm in group2]
+    errors2 = [best_regions[lm]['metrics'].get(key + '_sem', 0) for lm in group2]
+
     fig, ax = plt.subplots(figsize=(10,6))
-    x = np.arange(n_labels)
-    ax.bar(x, values, yerr=errors, capsize=5, color='skyblue', edgecolor='black')
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels_mod, rotation=45, ha='right')
-    ax.set_title(f'{_label_fmt(key)} in best 5x5 μm regions')
+    x1 = np.arange(len(group1))
+    x2 = x1 + len(group1) + 1
+
+    bar1 = ax.bar(x1, values1, yerr=errors1, capsize=5, label='Group 1', color='skyblue', edgecolor='black')
+    bar2 = ax.bar(x2, values2, yerr=errors2, capsize=5, label='Group 2', color='orange', edgecolor='black')
+
+    xticks = np.concatenate([x1, x2])
+    xticklabels = group1 + group2
+    ax.set_xticks(xticks)
+    ax.set_xticklabels(xticklabels, rotation=45, ha='right')
+    ax.set_title(f'{_label_fmt(key)} in best 5x5 μm regions (grouped)')
     ax.set_ylabel(_label_fmt(key))
+    ax.legend(fontsize=FS - 2)
     plt.tight_layout()
     fname = f'metric_comparison_{key}.png'
     if SAVE:
         plt.savefig(dir_path + fname, bbox_inches='tight')
         print(f"Saved → {fname}")
     plt.show()
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# FIGURE 4 – METRIC DISTRIBUTIONS  (histograms from window values)
-# ══════════════════════════════════════════════════════════════════════════════
 
 # One figure per modality, one subplot per metric.
 # Overlays all arrays as separate histogram traces.
